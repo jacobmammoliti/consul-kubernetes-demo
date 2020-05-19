@@ -39,3 +39,28 @@ variable "preemptible" {
   description = "controls whether kubernetes nodes should be preemtible or not"
   default     = true
 }
+
+variable "consul_namespace" {
+  description = "kubernetes namespace to deploy consul into"
+  default     = "consul"
+}
+
+variable "consul_datacenter" {
+  description = "datacenter name for consul"
+  default     = "dc1"
+}
+
+variable "consul_ui_enabled" {
+  description = "controls whether the ui is enabled for consul"
+  default = "true"
+}
+
+variable "consul_connect_injected_enabled" {
+  description = "controls whether automatic connect side injection will be enabled"
+  default = "true"
+}
+
+variable "consul_connect_injected_enabled_default" {
+  description = "controls connect injection by default, otherwise requires annotation"
+  default = "true"
+}
