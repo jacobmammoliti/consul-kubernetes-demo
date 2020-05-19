@@ -18,7 +18,7 @@ An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
   + create
 ...
-Plan: 1 to add, 0 to change, 0 to destroy.
+Plan: 2 to add, 0 to change, 0 to destroy.
 
 Do you want to perform these actions?
   Terraform will perform the actions described above.
@@ -26,5 +26,9 @@ Do you want to perform these actions?
 
   Enter a value: yes
 ...
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+connect = gcloud container cluster get-credentials consul --zone us-central1-a --project <redacted>
 ```

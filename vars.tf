@@ -1,3 +1,7 @@
+variable "project_id" {
+  description = "id of project to deploy kubernetes cluster into"
+}
+
 variable "cluster_name" {
   description = "name given to kubernetes cluster"
 }
