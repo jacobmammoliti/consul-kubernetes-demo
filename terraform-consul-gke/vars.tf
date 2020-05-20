@@ -52,15 +52,15 @@ variable "consul_datacenter" {
 
 variable "consul_ui_enabled" {
   description = "controls whether the ui is enabled for consul"
-  default = "true"
+  default     = "true"
 }
 
 variable "consul_connect_injected_enabled" {
   description = "controls whether automatic connect side injection will be enabled"
-  default = "true"
+  default     = "true"
 }
 
 variable "consul_connect_injected_enabled_default" {
   description = "controls connect injection by default, otherwise requires annotation"
-  default = "true"
+  default     = "true"
 }

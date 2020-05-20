@@ -1,6 +1,7 @@
 module "terraform-consul-gke" {
   source = "./terraform-consul-gke"
 
-  project_id   = var.project_id
-  cluster_name = var.cluster_name
+  project_id         = var.project_id
+  cluster_name       = var.cluster_name
+  initial_node_count = var.initial_node_count
 }
