@@ -2,7 +2,7 @@
 
 
 ## Architecture
-![architecture](consul.drawio.svg)
+![architecture](consul.svg)
 ## Setup
 ```shell
 # set path to google credentials
