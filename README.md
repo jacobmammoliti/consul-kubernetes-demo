@@ -1,5 +1,8 @@
 # HashiCorp Consul and Kubernetes
 
+
+## Architecture
+![architecture](consul.drawio.svg)
 ## Setup
 ```shell
 # set path to google credentials
