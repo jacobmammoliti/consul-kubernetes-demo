@@ -2,6 +2,8 @@ provider "google" {
 }
 
 provider "kubernetes" {
+  load_config_file = "false"
+  
   host  = module.terraform-consul-gke.endpoint
   token = module.terraform-consul-gke.access_token
 
