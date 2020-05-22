@@ -1,11 +1,15 @@
 global:
     datacenter: ${datacenter}
+    image: ${image_tag}
+    bootstrapACLs: ${enable_bootstrap_acls}
 
 server:
     replicas: ${replicas}
     bootstrapExpect: ${replicas}
 
 ui:
+    service:
+        type: ${service_type}
     enabled: ${ui_enabled}
 
 connectInject:

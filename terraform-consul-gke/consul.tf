@@ -12,8 +12,11 @@ resource "helm_release" "consul" {
   values = [
     templatefile("${path.module}/consul/values.tmpl", {
       datacenter                       = var.consul_datacenter,
+      image_tag                        = var.consul_image_tag,
+      enable_bootstrap_acls            = var.consul_enable_bootstrap_acls,
       replicas                         = var.initial_node_count,
       ui_enabled                       = var.consul_ui_enabled,
+      service_type                     = var.consul_service_type,
       connect_injected_enabled         = var.consul_connect_injected_enabled,
       connect_injected_enabled_default = var.consul_connect_injected_enabled_default
     })

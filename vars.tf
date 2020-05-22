@@ -45,6 +45,16 @@ variable "consul_namespace" {
   default     = "consul"
 }
 
+variable "consul_image_tag" {
+  description = "controls the consul docker image tag to pull"
+  default     = "consul:1.7.3"
+}
+
+variable "consul_enable_bootstrap_acls" {
+  description = "controls wether or not to enable bootstrap ACLs within consul"
+  default     = true
+}
+
 variable "consul_datacenter" {
   description = "datacenter name for consul"
   default     = "dc1"
@@ -53,6 +63,11 @@ variable "consul_datacenter" {
 variable "consul_ui_enabled" {
   description = "controls whether the ui is enabled for consul"
   default     = "true"
+}
+
+variable "consul_service_type" {
+  description = "controls the type of service will be deployed for the consul ui"
+  default     = "ClusterIP"
 }
 
 variable "consul_connect_injected_enabled" {
