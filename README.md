@@ -1,8 +1,8 @@
 # HashiCorp Consul and Kubernetes
 
-
 ## Architecture
 ![architecture](consul.svg)
+
 ## Setup
 ```shell
 # set path to google credentials
@@ -39,4 +39,75 @@ Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 Outputs:
 
 connect = gcloud container clusters get-credentials consul --zone us-central1-a --project <redacted>
+```
+
+
+## Configure Consul DNS in Kubernetes with a stub-domain
+```shell
+# get the IP address of the DNS service
+$ kubectl get svc consul-consul-dns -o jsonpath='{.spec.clusterIP}' -n consul
+10.47.255.71%
+
+# create a ConfigMap to tell KubeDNS to use the Consul DNS
+# service to resolve all domains ending with .consul
+$ kubectl apply -f - <<EOF
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    addonmanager.kubernetes.io/mode: EnsureExists
+  name: kube-dns
+  namespace: kube-system
+data:
+  stubDomains: |
+    {"consul": ["10.47.255.71"]}
+EOF
+Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
+configmap/kube-dns configured
+```
+
+## Query Consul DNS
+```shell
+# create a k8s job to run a dig against a Consul enabled service
+$ kubectl apply -f - <<EOF
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dig
+spec:
+  template:
+    spec:
+      containers:
+        - name: dig
+          image: anubhavmishra/tiny-tools
+          command: ['dig', 'pokedex.service.dc1.consul']
+      restartPolicy: Never
+  backoffLimit: 5
+EOF
+
+# get the name of the job
+$ kubectl get pods
+NAME        READY   STATUS      RESTARTS   AGE
+dig-bbbsv   0/1     Completed   0          12s
+
+# view the logs to verify we were able to discover the service
+$ kubectl logs dig-bbbsv 
+; <<>> DiG 9.11.2-P1 <<>> pokedex.service.dc1.consul
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 19278
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;pokedex.service.dc1.consul.    IN      A
+
+;; ANSWER SECTION:
+pokedex.service.dc1.consul. 0   IN      A       10.44.1.7
+
+;; Query time: 2 msec
+;; SERVER: 10.47.240.10#53(10.47.240.10)
+;; WHEN: Thu May 28 14:43:36 UTC 2020
+;; MSG SIZE  rcvd: 71
 ```

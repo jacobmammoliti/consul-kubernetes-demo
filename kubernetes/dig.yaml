@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dig
+spec:
+  template:
+    spec:
+      containers:
+        - name: dig
+          image: anubhavmishra/tiny-tools
+          command: ['dig', 'pokedex.service.dc1.consul']
+      restartPolicy: Never
+  backoffLimit: 5

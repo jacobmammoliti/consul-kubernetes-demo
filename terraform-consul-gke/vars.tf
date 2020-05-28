@@ -71,11 +71,11 @@ variable "consul_service_type" {
 }
 
 variable "consul_connect_injected_enabled" {
-  description = "controls whether automatic connect side injection will be enabled"
+  description = "controls whether automatic connect sidecar injection will be enabled"
   default     = "true"
 }
 
 variable "consul_connect_injected_enabled_default" {
   description = "controls connect injection by default, otherwise requires annotation"
-  default     = "true"
+  default     = "false"
 }

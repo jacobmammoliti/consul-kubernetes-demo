@@ -77,5 +77,5 @@ variable "consul_connect_injected_enabled" {
 
 variable "consul_connect_injected_enabled_default" {
   description = "controls connect injection by default, otherwise requires annotation"
-  default     = "true"
+  default     = "false"
 }
