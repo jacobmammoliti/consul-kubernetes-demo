@@ -8,6 +8,6 @@ spec:
       containers:
         - name: dig
           image: anubhavmishra/tiny-tools
-          command: ['dig', 'pokedex.service.dc1.consul']
+          command: ['dig', 'pokedex.service.arctiq.consul']
       restartPolicy: Never
   backoffLimit: 5

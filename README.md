@@ -46,7 +46,7 @@ connect = gcloud container clusters get-credentials consul --zone us-central1-a 
 ```shell
 # get the IP address of the DNS service
 $ kubectl get svc consul-consul-dns -o jsonpath='{.spec.clusterIP}' -n consul
-10.47.255.71%
+10.47.245.180%
 
 # create a ConfigMap to tell KubeDNS to use the Consul DNS
 # service to resolve all domains ending with .consul
@@ -60,7 +60,7 @@ metadata:
   namespace: kube-system
 data:
   stubDomains: |
-    {"consul": ["10.47.255.71"]}
+    {"consul": ["10.47.245.180"]}
 EOF
 Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
 configmap/kube-dns configured

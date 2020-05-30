@@ -3,3 +3,4 @@
 *.tfstate*
 *.tfvars
 consul-helm/
+values.yaml

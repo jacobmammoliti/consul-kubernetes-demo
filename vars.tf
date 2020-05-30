@@ -79,3 +79,15 @@ variable "consul_connect_injected_enabled_default" {
   description = "controls connect injection by default, otherwise requires annotation"
   default     = "false"
 }
+
+variable "consul_connect_k8s_deny_namespaces" {
+  description = "list of kubernetes namespaces that should not allow Connect sidecar injection"
+  default     = []
+  type        = list(string)
+}
+
+variable "consul_connect_k8s_allow_namespaces" {
+  description = "list of kubernetes namespaces to allow Connect sidecar injection"
+  default     = ["*"]
+  type        = list(string)
+}
