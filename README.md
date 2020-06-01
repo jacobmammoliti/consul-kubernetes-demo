@@ -46,7 +46,7 @@ connect = gcloud container clusters get-credentials consul --zone us-central1-a 
 ```shell
 # get the IP address of the DNS service
 $ kubectl get svc consul-consul-dns -o jsonpath='{.spec.clusterIP}' -n consul
-10.47.245.180%
+10.47.241.200
 
 # create a ConfigMap to tell KubeDNS to use the Consul DNS
 # service to resolve all domains ending with .consul
@@ -60,7 +60,7 @@ metadata:
   namespace: kube-system
 data:
   stubDomains: |
-    {"consul": ["10.47.245.180"]}
+    {"consul": ["10.47.241.200"]}
 EOF
 Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
 configmap/kube-dns configured
@@ -80,7 +80,7 @@ spec:
       containers:
         - name: dig
           image: anubhavmishra/tiny-tools
-          command: ['dig', 'pokedex.service.dc1.consul']
+          command: ['dig', 'pokedex.service.arctiq.consul']
       restartPolicy: Never
   backoffLimit: 5
 EOF
@@ -92,7 +92,7 @@ dig-bbbsv   0/1     Completed   0          12s
 
 # view the logs to verify we were able to discover the service
 $ kubectl logs dig-bbbsv 
-; <<>> DiG 9.11.2-P1 <<>> pokedex.service.dc1.consul
+; <<>> DiG 9.11.2-P1 <<>> pokedex.service.arctiq.consul
 ;; global options: +cmd
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 19278
@@ -101,10 +101,10 @@ $ kubectl logs dig-bbbsv
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 4096
 ;; QUESTION SECTION:
-;pokedex.service.dc1.consul.    IN      A
+;pokedex.service.arctiq.consul.    IN      A
 
 ;; ANSWER SECTION:
-pokedex.service.dc1.consul. 0   IN      A       10.44.1.7
+pokedex.service.arctiq.consul. 0   IN      A       10.44.1.7
 
 ;; Query time: 2 msec
 ;; SERVER: 10.47.240.10#53(10.47.240.10)
