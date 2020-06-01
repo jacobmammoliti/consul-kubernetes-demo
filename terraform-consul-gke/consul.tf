@@ -18,9 +18,7 @@ resource "helm_release" "consul" {
       ui_enabled                       = var.consul_ui_enabled,
       service_type                     = var.consul_service_type,
       connect_injected_enabled         = var.consul_connect_injected_enabled,
-      connect_injected_enabled_default = var.consul_connect_injected_enabled_default,
-      k8s_deny_namespaces              = join(", ", var.consul_connect_k8s_deny_namespaces),
-      k8s_allow_namespaces             = join(", ", var.consul_connect_k8s_allow_namespaces)
+      connect_injected_enabled_default = var.consul_connect_injected_enabled_default
     })
   ]
 }

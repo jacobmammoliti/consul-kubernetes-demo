@@ -52,10 +52,8 @@ metadata:
     'consul.hashicorp.com/connect-service-upstreams': 'pokedex:8080'
 spec:
   containers:
-    # This name will be the service name in Consul.
     - name: static-client
       image: tutum/curl:latest
-      # Just spin & wait forever, we'll use `kubectl exec` to demo
       command: ['/bin/sh', '-c', '--']
       args: ['while true; do sleep 30; done;']
   serviceAccountName: static-client

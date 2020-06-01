@@ -80,14 +80,7 @@ variable "consul_connect_injected_enabled_default" {
   default     = "false"
 }
 
-variable "consul_connect_k8s_deny_namespaces" {
-  description = "list of kubernetes namespaces that should not allow Connect sidecar injection"
-  default     = []
-  type        = list(string)
-}
-
-variable "consul_connect_k8s_allow_namespaces" {
-  description = "list of kubernetes namespaces to allow Connect sidecar injection"
-  default     = ["*"]
-  type        = list(string)
+variable "pokedex_replica_count" {
+  description = "replica count for pokedex app deployment"
+  default     = 3
 }
