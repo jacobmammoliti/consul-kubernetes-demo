@@ -3,6 +3,18 @@ kind: Namespace
 metadata:
   name: pokedex
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pokedex
+  namespace: pokedex
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: static-client
+  namespace: pokedex
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,6 +31,7 @@ spec:
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'
     spec:
+      serviceAccountName: pokedex
       containers:
         - name: pokedex
           image: jacobmammoliti/pokedex:latest
@@ -32,16 +45,17 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-    name: static-client
-    namespace: pokedex
-    annotations:
-      'consul.hashicorp.com/connect-inject': 'true'
-      'consul.hashicorp.com/connect-service-upstreams': 'pokedex:8080'
+  name: static-client
+  namespace: pokedex
+  annotations:
+    'consul.hashicorp.com/connect-inject': 'true'
+    'consul.hashicorp.com/connect-service-upstreams': 'pokedex:8080'
 spec:
-    containers:
+  containers:
     # This name will be the service name in Consul.
     - name: static-client
       image: tutum/curl:latest
       # Just spin & wait forever, we'll use `kubectl exec` to demo
       command: ['/bin/sh', '-c', '--']
       args: ['while true; do sleep 30; done;']
+  serviceAccountName: static-client
