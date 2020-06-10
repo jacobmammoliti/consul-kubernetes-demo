@@ -19,6 +19,7 @@ initial_node_count           = 3
 consul_service_type          = "LoadBalancer"
 preemptible                  = true
 EOF
+
 # initialize terraform
 $ terraform init
 Initializing modules...
