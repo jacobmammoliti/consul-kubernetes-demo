@@ -11,6 +11,14 @@ $ export GOOGLE_CREDENTIALS=<path_to_json>
 # clone Consul helm chart
 $ git clone git@github.com:hashicorp/consul-helm.git
 
+# create a tfvars file
+$ cat <<EOF > terraform.tfvars
+project_id                   = "<redacted>"
+cluster_name                 = "consul"
+initial_node_count           = 3
+consul_service_type          = "LoadBalancer"
+preemptible                  = true
+EOF
 # initialize terraform
 $ terraform init
 Initializing modules...
