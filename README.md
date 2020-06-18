@@ -1,5 +1,7 @@
 # HashiCorp Consul and Kubernetes
 
+![Validate Terraform](https://github.com/arctiqjacob/consul-kubernetes-demo/workflows/Validate%20Terraform/badge.svg?branch=master)
+
 ## Architecture
 ![architecture](consul.svg)
 
