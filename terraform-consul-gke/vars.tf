@@ -47,7 +47,7 @@ variable "consul_namespace" {
 
 variable "consul_image_tag" {
   description = "controls the consul docker image tag to pull"
-  default     = "consul:1.7.3"
+  default     = "consul:1.8.0-rc1"
 }
 
 variable "consul_enable_bootstrap_acls" {

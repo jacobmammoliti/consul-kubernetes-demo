@@ -1,7 +1,8 @@
 global:
     datacenter: ${datacenter}
     image: ${image_tag}
-    bootstrapACLs: ${enable_bootstrap_acls}
+    acls:
+        manageSystemACLs: ${enable_bootstrap_acls}
 
 server:
     replicas: ${replicas}
