@@ -47,7 +47,7 @@ variable "consul_namespace" {
 
 variable "consul_image_tag" {
   description = "controls the consul docker image tag to pull"
-  default     = "consul:1.8.0-rc1"
+  default     = "consul:1.8.0"
 }
 
 variable "consul_enable_bootstrap_acls" {
@@ -62,7 +62,7 @@ variable "consul_datacenter" {
 
 variable "consul_ui_enabled" {
   description = "controls whether the ui is enabled for consul"
-  default     = "true"
+  default     = true
 }
 
 variable "consul_service_type" {
@@ -72,12 +72,22 @@ variable "consul_service_type" {
 
 variable "consul_connect_injected_enabled" {
   description = "controls whether automatic connect sidecar injection will be enabled"
-  default     = "true"
+  default     = true
 }
 
 variable "consul_connect_injected_enabled_default" {
   description = "controls connect injection by default, otherwise requires annotation"
-  default     = "false"
+  default     = false
+}
+
+variable "consul_ingress_gateway_enabled" {
+  description = "controls whether to enable the consul ingress gateway"
+  default     = false
+}
+
+variable "consul_ingress_gateway_service_type" {
+  description = "controls the type of kubernetes service to assign the ingress gateway"
+  default     = "ClusterIP"
 }
 
 variable "pokedex_replica_count" {

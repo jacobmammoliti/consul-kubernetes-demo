@@ -10,9 +10,14 @@ server:
 
 ui:
     service:
-        type: ${service_type}
+        type: ${ui_service_type}
     enabled: ${ui_enabled}
 
 connectInject:
     enabled: ${connect_injected_enabled}
     default: ${connect_injected_enabled_default}
+
+ingressGateways:
+    enabled: ${ingress_gateway_enabled}
+    service:
+        type: ${ingress_gateway_service_type}
