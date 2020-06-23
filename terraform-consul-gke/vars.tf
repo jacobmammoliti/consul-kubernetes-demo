@@ -50,9 +50,9 @@ variable "consul_image_tag" {
   default     = "consul:1.8.0"
 }
 
-variable "consul_enable_bootstrap_acls" {
+variable "consul_manage_system_acls" {
   description = "controls wether or not to enable bootstrap ACLs within consul"
-  default     = true
+  default     = false
 }
 
 variable "consul_datacenter" {
@@ -87,7 +87,12 @@ variable "consul_ingress_gateway_enabled" {
 
 variable "consul_ingress_gateway_service_type" {
   description = "controls the type of kubernetes service to assign the ingress gateway"
-  default     = "ClusterIP"
+  default     = "LoadBalancer"
+}
+
+variable "consul_ingress_gateway_name" {
+  description = "controls the name of the ingress gateway in Consul"
+  default     = "ingress-service"
 }
 
 variable "pokedex_replica_count" {

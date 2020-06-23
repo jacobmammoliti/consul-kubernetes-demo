@@ -13,7 +13,7 @@ resource "helm_release" "consul" {
     templatefile("${path.module}/consul/values.tmpl", {
       datacenter                       = var.consul_datacenter,
       image_tag                        = var.consul_image_tag,
-      enable_bootstrap_acls            = var.consul_enable_bootstrap_acls,
+      manage_system_acls               = var.consul_manage_system_acls,
       replicas                         = var.initial_node_count,
       ui_enabled                       = var.consul_ui_enabled,
       ui_service_type                  = var.consul_service_type,
@@ -21,6 +21,7 @@ resource "helm_release" "consul" {
       connect_injected_enabled_default = var.consul_connect_injected_enabled_default,
       ingress_gateway_enabled          = var.consul_ingress_gateway_enabled,
       ingress_gateway_service_type     = var.consul_ingress_gateway_service_type
+      ingress_gateway_name             = var.consul_ingress_gateway_name
     })
   ]
 }

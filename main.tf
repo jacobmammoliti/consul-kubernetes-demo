@@ -7,5 +7,6 @@ module "terraform-consul-gke" {
   consul_service_type            = var.consul_service_type
   preemptible                    = var.preemptible
   machine_type                   = var.machine_type
+  consul_manage_system_acls      = var.consul_manage_system_acls
   consul_ingress_gateway_enabled = var.consul_ingress_gateway_enabled
 }

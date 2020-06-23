@@ -2,7 +2,7 @@ global:
     datacenter: ${datacenter}
     image: ${image_tag}
     acls:
-        manageSystemACLs: ${enable_bootstrap_acls}
+        manageSystemACLs: ${manage_system_acls}
 
 server:
     replicas: ${replicas}
@@ -19,5 +19,8 @@ connectInject:
 
 ingressGateways:
     enabled: ${ingress_gateway_enabled}
-    service:
-        type: ${ingress_gateway_service_type}
+    defaults:
+        service:
+            type: ${ingress_gateway_service_type}
+    gateways:
+        - name: ${ingress_gateway_name}
