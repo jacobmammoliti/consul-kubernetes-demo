@@ -8,6 +8,8 @@ kind: Deployment
 metadata:
   name: pokedex
   namespace: pokedex
+  labels:
+    app: pokedex
 spec:
   selector:
     matchLabels:
@@ -19,13 +21,12 @@ spec:
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'
     spec:
-      serviceAccountName: pokedex
       containers:
-        - name: pokedex
-          image: jacobmammoliti/pokedex:latest
-          args:
-            - -port=8080
-            - -host=127.0.0.1
-          ports:
-            - containerPort: 8080
-              name: http
+      - name: pokedex
+        image: jacobmammoliti/pokedex:latest
+        args:
+          - -port=8080
+          - -host=127.0.0.1
+        ports:
+        - containerPort: 8080
+          name: http
