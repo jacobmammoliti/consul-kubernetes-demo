@@ -3,9 +3,8 @@ provider "google" {
 
 provider "kubernetes" {
   load_config_file = "false"
-
-  host  = module.terraform-consul-gke.endpoint
-  token = module.terraform-consul-gke.access_token
+  host             = module.terraform-consul-gke.endpoint
+  token            = module.terraform-consul-gke.access_token
 
   cluster_ca_certificate = base64decode(
     module.terraform-consul-gke.cluster_ca_certificate
@@ -14,8 +13,9 @@ provider "kubernetes" {
 
 provider "helm" {
   kubernetes {
-    host  = module.terraform-consul-gke.endpoint
-    token = module.terraform-consul-gke.access_token
+    load_config_file = "false"
+    host             = module.terraform-consul-gke.endpoint
+    token            = module.terraform-consul-gke.access_token
 
     cluster_ca_certificate = base64decode(
       module.terraform-consul-gke.cluster_ca_certificate

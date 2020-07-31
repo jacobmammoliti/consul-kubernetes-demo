@@ -5,12 +5,13 @@ resource "kubernetes_namespace" "consul" {
 }
 
 resource "helm_release" "consul" {
-  name      = "consul"
-  chart     = "consul-helm"
-  namespace = kubernetes_namespace.consul.metadata.0.name
+  name       = "consul"
+  repository = "https://helm.releases.hashicorp.com/"
+  chart      = "consul"
+  namespace  = kubernetes_namespace.consul.metadata.0.name
 
   values = [
-    templatefile("${path.module}/consul/values.tmpl", {
+    templatefile("templates/values.tmpl", {
       datacenter                       = var.consul_datacenter,
       image_tag                        = var.consul_image_tag,
       manage_system_acls               = var.consul_manage_system_acls,
