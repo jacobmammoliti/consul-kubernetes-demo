@@ -11,7 +11,7 @@ resource "helm_release" "consul" {
   namespace  = kubernetes_namespace.consul.metadata.0.name
 
   values = [
-    templatefile("templates/values.tmpl", {
+    templatefile("${path.module}/templates/values.tmpl", {
       datacenter                       = var.consul_datacenter,
       image_tag                        = var.consul_image_tag,
       manage_system_acls               = var.consul_manage_system_acls,
