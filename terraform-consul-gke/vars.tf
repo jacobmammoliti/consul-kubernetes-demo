@@ -94,8 +94,3 @@ variable "consul_ingress_gateway_name" {
   description = "controls the name of the ingress gateway in Consul"
   default     = "ingress-service"
 }
-
-variable "pokedex_replica_count" {
-  description = "replica count for pokedex app deployment"
-  default     = 3
-}
