@@ -132,8 +132,4 @@ variable "consul_ingress_gateway_service_type" {
 variable "consul_ingress_gateway_name" {
   description = "controls the name of the ingress gateway in Consul"
   default     = "ingress-service"
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 93bd0dfee5387fee9328253f6a0505ba1fb80aba
