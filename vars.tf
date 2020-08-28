@@ -50,9 +50,42 @@ variable "consul_image_tag" {
   default     = "consul:1.8.0"
 }
 
+variable "consul_tls_enabled" {
+  type        = bool
+  description = "enables tls in the consul mesh"
+  default     = false
+}
+
+variable "consul_federation_enabled" {
+  type        = bool
+  description = "enables federation in the consul mesh"
+  default     = false
+}
+
+variable "consul_create_federation_secret" {
+  type        = bool
+  description = "tells consul to create a federation secret"
+  default     = false
+}
+
 variable "consul_manage_system_acls" {
   description = "controls wether or not to enable bootstrap ACLs within consul"
   default     = false
+}
+
+variable "consul_connect_enabled" {
+  description = "controls wether or not to enable Connect"
+  default     = true
+}
+
+variable "consul_gossip_encryption_secret_name" {
+  description = "secret name for kubernetes gossip secret name"
+  default     = "consul-gossip-encryption-key"
+}
+
+variable "consul_gossip_encryption_secret_key" {
+  description = "secret name for kubernetes gossip secret key"
+  default     = "key"
 }
 
 variable "consul_datacenter" {
@@ -80,6 +113,12 @@ variable "consul_connect_injected_enabled_default" {
   default     = false
 }
 
+variable "consul_mesh_gateway_enabled" {
+  type        = bool
+  description = "enables the consul mesh gateway"
+  default     = false
+}
+
 variable "consul_ingress_gateway_enabled" {
   description = "controls whether to enable the consul ingress gateway"
   default     = false
@@ -93,9 +132,4 @@ variable "consul_ingress_gateway_service_type" {
 variable "consul_ingress_gateway_name" {
   description = "controls the name of the ingress gateway in Consul"
   default     = "ingress-service"
-}
-
-variable "pokedex_replica_count" {
-  description = "replica count for pokedex app deployment"
-  default     = 3
 }

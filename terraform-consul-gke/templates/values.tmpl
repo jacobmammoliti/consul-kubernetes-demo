@@ -1,26 +1,35 @@
 global:
-    datacenter: ${datacenter}
-    image: ${image_tag}
-    acls:
-        manageSystemACLs: ${manage_system_acls}
+  datacenter: ${datacenter}
+  image: ${image_tag}
+  tls:
+    enabled: ${tls_enabled}
+  acls:
+    manageSystemACLs: ${manage_system_acls}
+  federation:
+    enabled: ${federation_enabled}
+    createFederationSecret: ${create_federation_secret}
 
 server:
-    replicas: ${replicas}
-    bootstrapExpect: ${replicas}
+  replicas: ${replicas}
+  bootstrapExpect: ${replicas}
+  connect: ${connect_enabled}
 
 ui:
-    service:
-        type: ${ui_service_type}
-    enabled: ${ui_enabled}
+  service:
+    type: ${ui_service_type}
+  enabled: ${ui_enabled}
 
 connectInject:
-    enabled: ${connect_injected_enabled}
-    default: ${connect_injected_enabled_default}
+  enabled: ${connect_injected_enabled}
+  default: ${connect_injected_enabled_default}
+
+meshGateway:
+  enabled: ${mesh_gateway_enabled}
 
 ingressGateways:
-    enabled: ${ingress_gateway_enabled}
-    defaults:
-        service:
-            type: ${ingress_gateway_service_type}
-    gateways:
-        - name: ${ingress_gateway_name}
+  enabled: ${ingress_gateway_enabled}
+  defaults:
+    service:
+      type: ${ingress_gateway_service_type}
+  gateways:
+    - name: ${ingress_gateway_name}
