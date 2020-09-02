@@ -1,135 +1,206 @@
 variable "project_id" {
-  description = "id of project to deploy kubernetes cluster into"
+  type        = string
+  description = "The project ID to host the cluster in (required)"
 }
 
 variable "cluster_name" {
-  description = "name given to kubernetes cluster"
+  type        = string
+  description = "The name of the cluster (required)"
 }
 
-variable "location" {
-  description = "location to deploy kubernetes cluster into"
+variable "region" {
+  type        = string
+  description = "The region to host the cluster in (required)"
   default     = "us-central1-a"
 }
 
 variable "initial_node_count" {
-  description = "inital node count for kubernetes cluster"
-  default     = "1"
+  type        = number
+  description = "The number of nodes to create in this cluster's default node pool (required)"
 }
 
 variable "network" {
-  description = "network where kubernetes nodes will live in"
+  type        = string
+  description = "The VPC network to host the cluster in (required)"
   default     = "default"
 }
 
+variable "cluster_ipv4_cidr_block" {
+  type        = "string"
+  description = "The IP address range for the cluster pod IPs"
+  default     = "192.168.0.0/16"
+}
+
+variable "services_ipv4_cidr_block" {
+  type        = "string"
+  description = "The IP address range of the services IPs in this cluster"
+  default     = "10.96.0.0/12"
+}
+
 variable "oauth_scopes" {
-  description = "list of oauth scopes kubernetes nodes has"
-  default = [
-    "https://www.googleapis.com/auth/logging.write",
-    "https://www.googleapis.com/auth/monitoring"
-  ]
-  type = list
+  type        = list(string)
+  description = "Map of lists containing node oauth scopes by node-pool name"
+  default     = ["https://www.googleapis.com/auth/cloud-platform"]
 }
 
 variable "machine_type" {
-  description = "compute resource type that each kubernetes node will live on"
-  default     = "n1-standard-1"
+  type        = string
+  description = "The GCE type that each of the cluster's nodes will be"
+  default     = "n1-standard-2"
 }
 
 variable "preemptible" {
-  description = "controls whether kubernetes nodes should be preemtible or not"
+  type        = bool
+  description = "Specifies if the nodes should be preemptible or not"
   default     = true
 }
 
+variable "consul_name" {
+  type        = string
+  description = "Specifies the name of the Consul deployment"
+  default     = "consul"
+}
+
 variable "consul_namespace" {
-  description = "kubernetes namespace to deploy consul into"
+  type        = string
+  description = "The namespace that Consul will be deployed into"
   default     = "consul"
 }
 
 variable "consul_image_tag" {
-  description = "controls the consul docker image tag to pull"
-  default     = "consul:1.8.0"
+  type        = string
+  description = "The tag of the Consul docker image to pull"
+  default     = "consul:1.8.3"
 }
 
 variable "consul_tls_enabled" {
   type        = bool
-  description = "enables tls in the consul mesh"
+  description = "Enables TLS across the Consul cluster to verify authenticity of servers and clients that connect"
   default     = false
+}
+
+variable "consul_gossip_encryption_enabled" {
+  type        = bool
+  description = "Enables gossip encryption across the Consul cluster"
+  default     = false
+}
+
+variable "consul_gossip_encryption_secret_name" {
+  type        = string
+  description = "The name of the Kubernetes secret that contains the gossip encryption key"
+  default     = "consul-gossip-encryption-key"
+}
+
+variable "consul_gossip_encryption_secret_key" {
+  type        = string
+  description = "The key within the Kubernetes secret that holds the gossip encryption key"
+  default     = "key"
+}
+
+variable "consul_gossip_encryption_secret_value" {
+  type        = string
+  description = "The value of the key within the Kubernetes secret that holds the gossip encryption key"
+  default     = ""
+}
+
+variable "consul_tls_ca_certificate" {
+  type        = string
+  description = "The certificate of the CA to use for TLS communication within the Consul cluster"
+  default     = ""
+}
+
+variable "consul_tls_ca_key" {
+  type        = string
+  description = "The private key of the CA to use for TLS communication within the Consul cluster"
+  default     = ""
 }
 
 variable "consul_federation_enabled" {
   type        = bool
-  description = "enables federation in the consul mesh"
+  description = "Enables federation on the Consul cluster"
   default     = false
 }
 
 variable "consul_create_federation_secret" {
   type        = bool
-  description = "tells consul to create a federation secret"
+  description = "Creates a Consul federation Kubernetes secret"
   default     = false
 }
 
 variable "consul_manage_system_acls" {
-  description = "controls wether or not to enable bootstrap ACLs within consul"
+  type        = bool
+  description = "Whether or not to enable bootstrap ACLs within Consul"
   default     = false
 }
 
 variable "consul_connect_enabled" {
-  description = "controls wether or not to enable Connect"
+  type        = bool
+  description = "Whether or not to enable Consul Connect"
   default     = true
 }
 
-variable "consul_gossip_encryption_secret_name" {
-  description = "secret name for kubernetes gossip secret name"
-  default     = "consul-gossip-encryption-key"
-}
-
-variable "consul_gossip_encryption_secret_key" {
-  description = "secret name for kubernetes gossip secret key"
-  default     = "key"
-}
-
 variable "consul_datacenter" {
-  description = "datacenter name for consul"
+  type        = string
+  description = "The name of the Consul datacenter"
   default     = "dc1"
 }
 
 variable "consul_ui_enabled" {
-  description = "controls whether the ui is enabled for consul"
+  type        = bool
+  description = "Specifies if the UI should be enabled in Consul"
   default     = true
 }
 
 variable "consul_service_type" {
-  description = "controls the type of service will be deployed for the consul ui"
+  type        = string
+  description = "Specifies the Kubernetes service type for the Consul UI service"
   default     = "ClusterIP"
 }
 
 variable "consul_connect_injected_enabled" {
-  description = "controls whether automatic connect side injection will be enabled"
+  type        = bool
+  description = "Whether or not to enable Consul Connect sidecar injection"
   default     = true
 }
 
 variable "consul_connect_injected_enabled_default" {
-  description = "controls connect injection by default, otherwise requires annotation"
+  type        = bool
+  description = "Whether or not to enable Consul Connect injection by default (otherwise requires annotation)"
   default     = false
 }
 
 variable "consul_mesh_gateway_enabled" {
   type        = bool
-  description = "enables the consul mesh gateway"
+  description = "Whether or not to enable the Consul Mesh Gateway"
   default     = false
 }
 
 variable "consul_ingress_gateway_enabled" {
-  description = "controls whether to enable the consul ingress gateway"
+  type        = bool
+  description = "Whether or not to enable the Consul Ingress Gateway"
   default     = false
 }
 
 variable "consul_ingress_gateway_service_type" {
-  description = "controls the type of kubernetes service to assign the ingress gateway"
-  default     = "ClusterIP"
+  type        = string
+  description = "Specifies the Kubernetes service type for the Consul Ingress Gateway"
+  default     = "LoadBalancer"
 }
 
 variable "consul_ingress_gateway_name" {
-  description = "controls the name of the ingress gateway in Consul"
+  type        = string
+  description = "Specifies the name of the Consul Ingress Gateway"
   default     = "ingress-service"
+}
+
+variable "consul_secondary_cluster" {
+  type        = bool
+  description = "Flags this Consul cluster as secondary (for WAN federation)"
+  default     = false
+}
+
+variable "consul_federation_config" {
+  type        = string
+  description = "Defines the primary Consul Server configuration in JSON format (for WAN federation)"
+  default     = ""
 }

@@ -1,19 +1,42 @@
 global:
+  name: ${name}
   datacenter: ${datacenter}
   image: ${image_tag}
+  %{ if gossip_encryption_enabled }
+  gossipEncryption:
+    secretName: ${gossip_encryption_secret_name}
+    secretKey: ${gossip_enryption_secret_key}
+  %{ endif }
   tls:
     enabled: ${tls_enabled}
+  %{ if consul_secondary_cluster }
+    caCert:
+      secretName: consul-federation
+      secretKey: caCert
+    caKey:
+      secretName: consul-federation
+      secretKey: caKey
+  %{ endif }
   acls:
     manageSystemACLs: ${manage_system_acls}
   federation:
     enabled: ${federation_enabled}
+    %{ if create_federation_secret }
     createFederationSecret: ${create_federation_secret}
-
+    %{ endif }
 server:
   replicas: ${replicas}
   bootstrapExpect: ${replicas}
   connect: ${connect_enabled}
-
+  %{ if consul_secondary_cluster }
+  extraVolumes:
+    - type: secret
+      name: consul-federation
+      items:
+        - key: serverConfigJSON
+          path: config.json
+      load: true
+  %{ endif }
 ui:
   service:
     type: ${ui_service_type}
@@ -28,8 +51,10 @@ meshGateway:
 
 ingressGateways:
   enabled: ${ingress_gateway_enabled}
+  %{ if ingress_gateway_enabled }
   defaults:
     service:
       type: ${ingress_gateway_service_type}
   gateways:
     - name: ${ingress_gateway_name}
+  %{ endif }
