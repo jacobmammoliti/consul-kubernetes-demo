@@ -137,7 +137,7 @@ cluster_name                          = "consul-1"
 project_id                            = <redacted>
 initial_node_count                    = 3
 cluster_ipv4_cidr_block               = "10.10.0.0/21"
-services_ipv4_cidr_block              = "10.20.0.0/24"
+services_ipv4_cidr_block              = "10.10.10.0/24"
 consul_datacenter                     = "dc1"
 consul_connect_enabled                = true
 consul_mesh_gateway_enabled           = true
@@ -146,7 +146,6 @@ consul_federation_enabled             = true
 consul_create_federation_secret       = true
 preemptible                           = true
 consul_gossip_encryption_enabled      = true
-consul_gossip_encryption_secret_value = <redacted>
 ```
 `dc2.tfvars`
 ```HCL
@@ -163,17 +162,15 @@ consul_federation_enabled             = true
 consul_create_federation_secret       = false
 preemptible                           = true
 consul_gossip_encryption_enabled      = true
-consul_gossip_encryption_secret_value = <redacted>
-
-consul_secondary_cluster  = true
-consul_tls_ca_certificate = <redacted>
-consul_tls_ca_key         = <redacted>
-consul_federation_config  = <redacted>
+consul_secondary_cluster              = true
 ```
 
 The following steps can be followed to deploy the clusters.
 
 ```shell
+# Generate a gossip key
+$ export TF_VAR_consul_gossip_encryption_secret_value=`consul keygen`
+
 # Deploy the first GKE cluster with Consul dc1
 $ terraform apply -var-file=dc1.tfvars -auto-approve
 ...
