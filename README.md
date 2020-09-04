@@ -126,9 +126,6 @@ pokedex.service.arctiq.consul. 0   IN      A       10.44.1.7
 ## Deploying two Consul Clusters with WAN Federation and Mesh Gateway
 This following example goes through deploying two separate GKE clusters with Consul deployed in both and joined via a Mesh Gateway. Note, when deploying the second GKE + Consul cluster the following variables will need to be updated:
 - `consul_secondary_cluster` must be set to True
-- `consul_tls_ca_certificate` must contain the CA certificate from the initial cluster
-- `consul_tls_ca_key` must contain the CA key from the initial cluster
-- `consul_federation_config` must contain the federation configuration
 
 > Note: The Kubernetes pod and service CIDR blocks also must be different in each cluster.
 
@@ -139,6 +136,8 @@ Below are sample tfvars for each clusters.
 cluster_name                          = "consul-1"
 project_id                            = <redacted>
 initial_node_count                    = 3
+cluster_ipv4_cidr_block               = "10.10.0.0/21"
+services_ipv4_cidr_block              = "10.20.0.0/24"
 consul_datacenter                     = "dc1"
 consul_connect_enabled                = true
 consul_mesh_gateway_enabled           = true
@@ -190,13 +189,13 @@ Fetching cluster endpoint and auth data.
 kubeconfig entry generated for consul-1.
 
 # Retrieve the federation CA certificate
-$ kubectl get secret consul-federation -n consul -o jsonpath={.data.caCert}
+$ export TF_VAR_consul_tls_ca_certificate=`kubectl get secret consul-federation -n consul -o jsonpath={.data.caCert}`
 
 # Retrieve the federation CA key
-$ kubectl get secret consul-federation -n consul -o jsonpath={.data.caKey}
+$ export TF_VAR_consul_tls_ca_key=`kubectl get secret consul-federation -n consul -o jsonpath={.data.caKey}`
 
 # Retrieve the server configuration for the second cluster
-$ kubectl get secret consul-federation -n consul -o jsonpath={.data.serverConfigJSON}
+$ export TF_VAR_consul_federation_config=`kubectl get secret consul-federation -n consul -o jsonpath={.data.serverConfigJSON}`
 
 # Switch to a new Terraform workspace
 $ terraform workspace select dc2
