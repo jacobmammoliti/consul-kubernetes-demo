@@ -133,36 +133,38 @@ Below are sample tfvars for each clusters.
 
 `dc1.tfvars`
 ```HCL
-cluster_name                          = "consul-1"
-project_id                            = <redacted>
-initial_node_count                    = 3
-cluster_ipv4_cidr_block               = "10.10.0.0/21"
-services_ipv4_cidr_block              = "10.10.10.0/24"
-consul_datacenter                     = "dc1"
-consul_connect_enabled                = true
-consul_mesh_gateway_enabled           = true
-consul_tls_enabled                    = true
-consul_federation_enabled             = true
-consul_create_federation_secret       = true
-preemptible                           = true
-consul_gossip_encryption_enabled      = true
+cluster_name                     = "consul-east"
+region                           = "us-east1-b"
+project_id                       = <redacted>
+initial_node_count               = 3
+cluster_ipv4_cidr_block          = "192.168.0.0/21"
+services_ipv4_cidr_block         = "192.168.8.0/24"
+consul_datacenter                = "dc-east"
+consul_connect_enabled           = true
+consul_mesh_gateway_enabled      = true
+consul_tls_enabled               = true
+consul_federation_enabled        = true
+consul_create_federation_secret  = true
+preemptible                      = true
+consul_gossip_encryption_enabled = true
 ```
 `dc2.tfvars`
 ```HCL
-cluster_name                          = "consul-2"
-project_id                            = <redacted>
-initial_node_count                    = 3
-cluster_ipv4_cidr_block               = "192.168.0.0/21"
-services_ipv4_cidr_block              = "192.168.10.0/24"
-consul_datacenter                     = "dc2"
-consul_connect_enabled                = true
-consul_mesh_gateway_enabled           = true
-consul_tls_enabled                    = true
-consul_federation_enabled             = true
-consul_create_federation_secret       = false
-preemptible                           = true
-consul_gossip_encryption_enabled      = true
-consul_secondary_cluster              = true
+cluster_name                     = "consul-west"
+region                           = "us-west1-c"
+project_id                       = <redacted>
+initial_node_count               = 3
+cluster_ipv4_cidr_block          = "192.168.9.0/21"
+services_ipv4_cidr_block         = "192.168.16.0/24"
+consul_datacenter                = "dc-west"
+consul_connect_enabled           = true
+consul_mesh_gateway_enabled      = true
+consul_tls_enabled               = true
+consul_federation_enabled        = true
+consul_create_federation_secret  = false
+preemptible                      = true
+consul_gossip_encryption_enabled = true
+consul_secondary_cluster         = true
 ```
 
 The following steps can be followed to deploy the clusters.

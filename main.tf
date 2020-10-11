@@ -2,6 +2,7 @@ module "terraform-consul-gke" {
   source = "./terraform-consul-gke"
 
   project_id                            = var.project_id
+  region                                = var.region
   cluster_name                          = var.cluster_name
   cluster_ipv4_cidr_block               = var.cluster_ipv4_cidr_block
   services_ipv4_cidr_block              = var.services_ipv4_cidr_block
