@@ -233,10 +233,11 @@ serviceaccount/static-server created
 pod/static-server-v1 created
 pod/static-server-v2 created
 
-# Apply the ServiceSplitter and ServiceDefaults CRD to send traffic to two versions of the application
+# Apply the ServiceSplitter, ServiceResolver, and ServiceDefaults CRD to send traffic to two versions of the application
 $ kubectl apply -f kubernetes/consul-service.yaml
 servicesplitter.consul.hashicorp.com/static-server created
 servicedefaults.consul.hashicorp.com/static-server created
+serviceresolver.consul.hashicorp.com/static-server created
 
 # Apply the Ingress Gateway configuration entry
 $ consul config write - <<EOF
