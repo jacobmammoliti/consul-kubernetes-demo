@@ -1,0 +1,20 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceSplitter
+metadata:
+  name: static-server
+spec:
+  splits:
+    - weight: 50
+      service: static-server
+      serviceSubset: v1
+    - weight: 50
+      service: static-server
+      serviceSubset: v2
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: static-server
+spec:
+  protocol: 'http'

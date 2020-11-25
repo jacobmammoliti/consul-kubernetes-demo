@@ -1,3 +1,20 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "~> 3.35.0"
+    }
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = "~> 1.12.0"
+    }
+    helm = {
+      source = "hashicorp/helm"
+      version = "~> 1.2.4"
+    }
+  }
+}
+
 module "terraform-consul-gke" {
   source = "./terraform-consul-gke"
 
@@ -8,6 +25,7 @@ module "terraform-consul-gke" {
   services_ipv4_cidr_block              = var.services_ipv4_cidr_block
   consul_name                           = var.consul_name
   consul_datacenter                     = var.consul_datacenter
+  consul_image_tag                      = var.consul_image_tag
   initial_node_count                    = var.initial_node_count
   consul_tls_enabled                    = var.consul_tls_enabled
   consul_tls_ca_certificate             = var.consul_tls_ca_certificate

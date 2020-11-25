@@ -70,7 +70,7 @@ variable "consul_namespace" {
 variable "consul_image_tag" {
   type        = string
   description = "The tag of the Consul docker image to pull"
-  default     = "consul:1.8.3"
+  default     = "consul:1.9.0"
 }
 
 variable "consul_tls_enabled" {
@@ -89,12 +89,6 @@ variable "consul_gossip_encryption_secret_name" {
   type        = string
   description = "The name of the Kubernetes secret that contains the gossip encryption key"
   default     = "consul-gossip-encryption-key"
-}
-
-variable "consul_gossip_encryption_secret_key" {
-  type        = string
-  description = "The key within the Kubernetes secret that holds the gossip encryption key"
-  default     = "key"
 }
 
 variable "consul_gossip_encryption_secret_value" {
@@ -203,4 +197,10 @@ variable "consul_federation_config" {
   type        = string
   description = "Defines the primary Consul Server configuration in JSON format (for WAN federation)"
   default     = ""
+}
+
+variable "consul_controller_enabled" {
+  type        = bool
+  description = "Specifies whether Consul CRDs should be enabled in the cluster"
+  default     = true
 }

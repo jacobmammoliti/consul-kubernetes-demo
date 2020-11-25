@@ -6,7 +6,7 @@
 ![architecture](consul.svg)
 
 ## Setup
-```shell
+```bash
 # set path to google credentials
 $ export GOOGLE_CREDENTIALS=<path_to_json>
 
@@ -54,7 +54,7 @@ connect = gcloud container clusters get-credentials consul --zone us-central1-a 
 ```
 
 ## Configure Consul DNS in Kubernetes with a stub-domain
-```shell
+```bash
 # get the IP address of the DNS service
 $ kubectl get svc consul-consul-dns -o jsonpath='{.spec.clusterIP}' -n consul
 10.47.241.200
@@ -78,7 +78,7 @@ configmap/kube-dns configured
 ```
 
 ## Query Consul DNS
-```shell
+```bash
 # create a k8s job to run a dig against a Consul enabled service
 $ kubectl apply -f - <<EOF
 apiVersion: batch/v1
@@ -169,7 +169,7 @@ consul_secondary_cluster         = true
 
 The following steps can be followed to deploy the clusters.
 
-```shell
+```bash
 # Generate a gossip key
 $ export TF_VAR_consul_gossip_encryption_secret_value=`consul keygen`
 
@@ -221,4 +221,47 @@ consul-server-1.dc1  10.32.0.11:8302    alive   server  1.8.3  2         dc1  <a
 consul-server-1.dc2  192.168.1.5:8302   alive   server  1.8.3  2         dc2  <all>
 consul-server-2.dc1  10.32.1.9:8302     alive   server  1.8.3  2         dc1  <all>
 consul-server-2.dc2  192.168.0.11:8302  alive   server  1.8.3  2         dc2  <all>
+```
+
+## Configuring the Ingress Gateway
+The following steps go through setting up a sample 2 versioned application with the Ingress Gateway.
+
+```bash
+# Deploy the application
+$ kubectl apply -f kubernetes/static-server.yaml
+serviceaccount/static-server created
+pod/static-server-v1 created
+pod/static-server-v2 created
+
+# Apply the ServiceSplitter and ServiceDefaults CRD to send traffic to two versions of the application
+$ kubectl apply -f kubernetes/consul-service.yaml
+servicesplitter.consul.hashicorp.com/static-server created
+servicedefaults.consul.hashicorp.com/static-server created
+
+# Apply the Ingress Gateway configuration entry
+$ consul config write - <<EOF
+Kind = "ingress-gateway"
+Name = "ingress-service"
+
+Listeners = [
+ {
+   Port = 8080
+   Protocol = "http"
+   Services = [
+     {
+       Name  = "static-server"
+       Hosts = ["static-server.104.196.19.59.nip.io"]
+     }
+   ]
+ }
+]
+EOF
+Config entry written: ingress-gateway/ingress-service
+
+# curl the Ingress Gateway
+$ curl http://static-server.104.196.19.59.nip.io:8080/ 
+"us-west"
+
+$ curl http://static-server.104.196.19.59.nip.io:8080/
+"us-east"
 ```

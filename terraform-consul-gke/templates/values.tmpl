@@ -5,7 +5,7 @@ global:
   %{ if gossip_encryption_enabled }
   gossipEncryption:
     secretName: ${gossip_encryption_secret_name}
-    secretKey: ${gossip_enryption_secret_key}
+    secretKey: key
   %{ endif }
   tls:
     enabled: ${tls_enabled}
@@ -45,6 +45,11 @@ ui:
 connectInject:
   enabled: ${connect_injected_enabled}
   default: ${connect_injected_enabled_default}
+  healthChecks:
+    enabled: true
+
+controller:
+  enabled: ${controller_enabled}
 
 meshGateway:
   enabled: ${mesh_gateway_enabled}

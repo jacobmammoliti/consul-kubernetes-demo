@@ -18,7 +18,6 @@ resource "helm_release" "consul" {
       tls_enabled                      = var.consul_tls_enabled,
       gossip_encryption_enabled        = var.consul_gossip_encryption_enabled,
       gossip_encryption_secret_name    = var.consul_gossip_encryption_secret_name,
-      gossip_enryption_secret_key      = var.consul_gossip_encryption_secret_key,
       federation_enabled               = var.consul_federation_enabled,
       create_federation_secret         = var.consul_create_federation_secret,
       manage_system_acls               = var.consul_manage_system_acls,
@@ -33,6 +32,7 @@ resource "helm_release" "consul" {
       ingress_gateway_service_type     = var.consul_ingress_gateway_service_type,
       ingress_gateway_name             = var.consul_ingress_gateway_name,
       consul_secondary_cluster         = var.consul_secondary_cluster
+      controller_enabled               = var.consul_controller_enabled
     })
   ]
 
@@ -48,7 +48,7 @@ resource "kubernetes_secret" "gossip_encryption_secret" {
   }
 
   data = {
-    "${var.consul_gossip_encryption_secret_key}" = var.consul_gossip_encryption_secret_value
+    "key" = var.consul_gossip_encryption_secret_value
   }
 }
 
