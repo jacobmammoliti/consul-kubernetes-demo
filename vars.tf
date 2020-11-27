@@ -28,13 +28,13 @@ variable "network" {
 variable "cluster_ipv4_cidr_block" {
   type        = string
   description = "The IP address range for the cluster pod IPs"
-  default     = "192.168.0.0/16"
+  default     = "192.168.0.0/21"
 }
 
 variable "services_ipv4_cidr_block" {
   type        = string
   description = "The IP address range of the services IPs in this cluster"
-  default     = "10.96.0.0/12"
+  default     = "10.96.0.0/24"
 }
 
 variable "oauth_scopes" {

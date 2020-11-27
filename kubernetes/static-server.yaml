@@ -18,7 +18,7 @@ spec:
     - name: static-server
       image: hashicorp/http-echo:latest
       args:
-        - -text="us-east"
+        - -text="v1"
         - -listen=:8080
       ports:
         - containerPort: 8080
@@ -41,7 +41,7 @@ spec:
     - name: static-server
       image: hashicorp/http-echo:latest
       args:
-        - -text="us-west"
+        - -text="v2"
         - -listen=:8080
       ports:
         - containerPort: 8080

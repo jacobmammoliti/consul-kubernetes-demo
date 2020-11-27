@@ -1,5 +1,17 @@
 ---
 apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceRouter
+metadata:
+  name: static-server
+spec:
+  routes:
+    - match:
+        http:
+          pathPrefix: '/'
+        destination:
+          service: static-server
+---
+apiVersion: consul.hashicorp.com/v1alpha1
 kind: ServiceDefaults
 metadata:
   name: static-server
