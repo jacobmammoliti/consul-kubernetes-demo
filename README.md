@@ -251,6 +251,32 @@ Listeners = [
    Services = [
      {
        Name  = "static-server"
+     }
+   ]
+ }
+]
+EOF
+Config entry written: ingress-gateway/ingress-service
+
+# curl the Ingress Gateway
+$ curl -H 'Host: static-server.ingress.dc-east.consul' 104.196.19.59:8080
+"v1"
+
+$ curl -H 'Host: static-server.ingress.dc-east.consul' 104.196.19.59:8080
+"v2"
+
+# Apply the Ingress Gateway configuration entry with a custom host
+$ consul config write - <<EOF
+Kind = "ingress-gateway"
+Name = "ingress-service"
+
+Listeners = [
+ {
+   Port = 8080
+   Protocol = "http"
+   Services = [
+     {
+       Name  = "static-server"
        Hosts = ["static-server.104.196.19.59.nip.io"]
      }
    ]
@@ -261,8 +287,8 @@ Config entry written: ingress-gateway/ingress-service
 
 # curl the Ingress Gateway
 $ curl http://static-server.104.196.19.59.nip.io:8080/ 
-"us-west"
+"v1"
 
 $ curl http://static-server.104.196.19.59.nip.io:8080/
-"us-east"
+"v2"
 ```
