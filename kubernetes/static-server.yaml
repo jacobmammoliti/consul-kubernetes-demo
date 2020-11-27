@@ -9,9 +9,7 @@ metadata:
   name: static-server-v1
   annotations:
     'consul.hashicorp.com/connect-inject': 'true'
-  labels:
-    app: static-server
-    version: v1
+    'consul.hashicorp.com/service-meta-version': 'v1'
 spec:
   containers:
     # This name will be the service name in Consul.
@@ -32,9 +30,7 @@ metadata:
   name: static-server-v2
   annotations:
     'consul.hashicorp.com/connect-inject': 'true'
-  labels:
-    app: static-server
-    version: v2
+    'consul.hashicorp.com/service-meta-version': 'v2'
 spec:
   containers:
     # This name will be the service name in Consul.
