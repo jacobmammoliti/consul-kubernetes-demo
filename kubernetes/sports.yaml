@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: random-sports-team-sa
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-sports-team-v1
+  annotations:
+    'consul.hashicorp.com/connect-inject': 'true'
+    'consul.hashicorp.com/service-meta-version': 'v1'
+spec:
+  containers:
+    # This name will be the service name in Consul.
+    - name: random-sports-team
+      image: jacobmammoliti/random-sports-team:2.0
+      imagePullPolicy: Always
+      env:
+        - name: SPORT
+          value: 'NHL'
+      ports:
+        - containerPort: 8080
+          name: http
+    # If ACLs are enabled, the serviceAccountName must match the Consul service name.
+  serviceAccountName: random-sports-team-sa
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-sports-team-v2
+  annotations:
+    'consul.hashicorp.com/connect-inject': 'true'
+    'consul.hashicorp.com/service-meta-version': 'v2'
+spec:
+  containers:
+    # This name will be the service name in Consul.
+    - name: random-sports-team
+      image: jacobmammoliti/random-sports-team:2.0
+      imagePullPolicy: Always
+      env:
+        - name: SPORT
+          value: 'NFL'
+      ports:
+        - containerPort: 8080
+          name: http
+    # If ACLs are enabled, the serviceAccountName must match the Consul service name.
+  serviceAccountName: random-sports-team-sa

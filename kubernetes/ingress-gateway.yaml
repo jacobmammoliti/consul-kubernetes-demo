@@ -1,0 +1,12 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: IngressGateway
+metadata:
+  name: ingress-service
+spec:
+  listeners:
+    - port: 8080
+      protocol: http
+      services:
+        - name: random-sports-team
+          hosts: ['random-sports-team.35.226.42.237.nip.io']

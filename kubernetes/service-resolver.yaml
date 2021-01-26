@@ -1,0 +1,14 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceResolver
+metadata:
+  name: random-sports-team
+spec:
+  defaultSubset: v1
+  subsets:
+    v1:
+      filter: 'Service.Meta.version == v1'
+      onlyPassing: true
+    v2:
+      filter: 'Service.Meta.version == v2'
+      onlyPassing: true

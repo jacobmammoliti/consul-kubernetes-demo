@@ -70,7 +70,7 @@ variable "consul_namespace" {
 variable "consul_image_tag" {
   type        = string
   description = "The tag of the Consul docker image to pull"
-  default     = "consul:1.9.0"
+  default     = "consul:1.9.2"
 }
 
 variable "consul_tls_enabled" {

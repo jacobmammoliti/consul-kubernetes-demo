@@ -1,0 +1,13 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceSplitter
+metadata:
+  name: random-sports-team
+spec:
+  splits:
+    - weight: 50
+      service: random-sports-team
+      serviceSubset: v1
+    - weight: 50
+      service: random-sports-team
+      serviceSubset: v2
